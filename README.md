@@ -27,7 +27,8 @@ At build time the password is hashed (SHA-256) into the static site. The plainte
 
 ## Deploy to GitHub Pages
 
-1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
+1. **Settings → Pages → Build and deployment → Source: GitHub Actions**  
+   (Do **not** use “Deploy from a branch” on `main` — that runs Jekyll on the Astro source and fails.)
 2. **Settings → Secrets and variables → Actions → New repository secret**
    - Name: `CAMP_PASSWORD`
    - Value: the shared camp password

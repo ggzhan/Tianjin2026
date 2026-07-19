@@ -1,0 +1,4 @@
+# Prevent legacy Jekyll builds from treating Astro source as a site.
+# Prefer Pages → Source: GitHub Actions (see .github/workflows/deploy.yml).
+exclude:
+  - "*"
