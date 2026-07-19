@@ -64,13 +64,13 @@ const path = stripBase(Astro.url.pathname);
             <a href={href('/')} aria-current={path === '/' ? 'page' : undefined}>Start</a>
             <a href={href('/blog')} aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
             <a href={href('/lager')} aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
-            <a
-              class:list={['nav-camp', mode === 'intern' && 'is-active']}
-              href={href('/intern')}
-              aria-current={path.startsWith('/intern') ? 'page' : undefined}
-            >
-              Lagerteilnehmer
-            </a>
+            {
+              mode !== 'intern' && (
+                <a class="nav-camp" href={href('/intern')}>
+                  Lagerteilnehmer
+                </a>
+              )
+            }
           </nav>
         </details>
 
@@ -78,13 +78,13 @@ const path = stripBase(Astro.url.pathname);
           <a href={href('/')} aria-current={path === '/' ? 'page' : undefined}>Start</a>
           <a href={href('/blog')} aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
           <a href={href('/lager')} aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
-          <a
-            class:list={['nav-camp', mode === 'intern' && 'is-active']}
-            href={href('/intern')}
-            aria-current={path.startsWith('/intern') ? 'page' : undefined}
-          >
-            Lagerteilnehmer
-          </a>
+          {
+            mode !== 'intern' && (
+              <a class="nav-camp" href={href('/intern')}>
+                Lagerteilnehmer
+              </a>
+            )
+          }
         </nav>
       </div>
     </header>
