@@ -33,11 +33,13 @@ Strategy: **Full palette** — violet primary + vermillion accent on pure white.
 - Private: dense but scannable — sticky subnav, time-block schedule, address blocks
 - Cards only for interactive clusters (blog post links, login form)
 
-## Motion
+## Accessibility & UX notes
 
-- 2–3 intentional motions: page enter stagger on hero, soft mode-switch cue into `/intern`, blog list reveal
-- Easing: `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out-expo)
-- Honor `prefers-reduced-motion: reduce`
+- Skip link to `#main-content`
+- Visible `:focus-visible` rings; `touch-action: manipulation`
+- Mobile hamburger with `aria-expanded` / labelled toggle
+- Login: password show/hide, error `role="alert"`, focus returns to field on failure
+- Keep OTTV violet + vermillion tokens (do not swap to generic community-purple kits)
 
 ## Components
 

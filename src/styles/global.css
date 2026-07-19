@@ -8,6 +8,7 @@
   --primary-ink: oklch(1 0 0);
   --accent-ink: oklch(1 0 0);
   --line: oklch(0.9 0.015 294);
+  --focus-ring: oklch(0.55 0.16 294);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --font-display: "Bricolage Grotesque", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible", system-ui, sans-serif;
@@ -15,6 +16,7 @@
   --prose: 42rem;
   --z-sticky: 20;
   --z-nav: 30;
+  --z-skip: 40;
 }
 
 *,
@@ -25,6 +27,45 @@
 
 html {
   scroll-behavior: smooth;
+  touch-action: manipulation;
+}
+
+a,
+button,
+summary,
+[role="button"] {
+  cursor: pointer;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: var(--z-skip);
+  padding: 0.65rem 1rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-family: var(--font-display);
+  font-weight: 650;
+  text-decoration: none;
+  transform: translateY(-120%);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-offset: 2px;
 }
 
 body {
@@ -890,6 +931,42 @@ p:last-child {
 .login-panel input:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+.login-panel input:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.password-field {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.password-field input {
+  margin-bottom: 0;
+  padding-right: 4.5rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  min-height: 2.4rem;
+  min-width: 3.75rem;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.password-toggle:hover {
+  background: color-mix(in oklch, var(--primary) 10%, transparent);
 }
 
 .login-error {

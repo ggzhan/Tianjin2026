@@ -39,6 +39,7 @@ const path = stripBase(Astro.url.pathname);
     <title>{pageTitle}</title>
   </head>
   <body data-mode={mode}>
+    <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <header class="site-header">
       <div class="wrap site-header__inner">
         <a class="brand" href={href('/')}>
@@ -81,7 +82,7 @@ const path = stripBase(Astro.url.pathname);
         </nav>
       </div>
     </header>
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <footer class="site-footer">
@@ -102,10 +103,22 @@ const path = stripBase(Astro.url.pathname);
     </footer>
     <CampAuth />
     <script>
-      // Close mobile menu after navigating / tapping a link
+      const drawer = document.querySelector('.nav-drawer');
+      const toggle = document.querySelector('.nav-drawer__toggle');
+
+      function syncMenuLabel() {
+        if (!(drawer instanceof HTMLDetailsElement) || !(toggle instanceof HTMLElement)) return;
+        toggle.setAttribute('aria-label', drawer.open ? 'Menü schliessen' : 'Menü öffnen');
+        toggle.setAttribute('aria-expanded', drawer.open ? 'true' : 'false');
+      }
+
+      if (drawer instanceof HTMLDetailsElement) {
+        syncMenuLabel();
+        drawer.addEventListener('toggle', syncMenuLabel);
+      }
+
       document.querySelectorAll('.nav-drawer .nav a').forEach((link) => {
         link.addEventListener('click', () => {
-          const drawer = document.querySelector('.nav-drawer');
           if (drawer instanceof HTMLDetailsElement) drawer.open = false;
         });
       });

@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { href } from '../../lib/paths';
 
-const error = Astro.url.searchParams.get('error');
 const nextParam = Astro.url.searchParams.get('next') || '';
 ---
 
@@ -10,21 +9,30 @@ const nextParam = Astro.url.searchParams.get('next') || '';
   <div class="wrap">
     <div class="login-panel">
       <p class="eyebrow">Intern</p>
-      <h1 style="font-size: 1.85rem">Camp-Bereich</h1>
+      <h1 style="font-size: clamp(1.5rem, 5vw, 1.85rem)">Camp-Bereich</h1>
       <p style="color: var(--muted); margin-top: 0">Gemeinsames Passwort für Spieler:innen und Eltern.</p>
-      <p class="login-error" id="login-error" role="alert" hidden>Passwort stimmt nicht. Noch einmal versuchen.</p>
-      {
-        error && (
-          <p class="login-error" role="alert">
-            Passwort stimmt nicht. Noch einmal versuchen.
-          </p>
-        )
-      }
-      <form id="camp-login-form">
+      <p class="login-error" id="login-error" role="alert" hidden>
+        Passwort stimmt nicht. Noch einmal versuchen — oder beim Coach nachfragen.
+      </p>
+      <form id="camp-login-form" novalidate>
         <input type="hidden" name="next" id="login-next" value={nextParam} />
         <label for="password">Passwort</label>
-        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus />
-        <button class="btn btn-primary" type="submit" style="width: 100%">Eintreten</button>
+        <div class="password-field">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            autofocus
+            aria-describedby="login-error"
+            minlength="1"
+          />
+          <button type="button" class="password-toggle" id="password-toggle" aria-pressed="false" aria-controls="password">
+            Zeigen
+          </button>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width: 100%" id="login-submit">Eintreten</button>
       </form>
     </div>
   </div>
@@ -38,6 +46,9 @@ const nextParam = Astro.url.searchParams.get('next') || '';
   const form = document.getElementById('camp-login-form') as HTMLFormElement | null;
   const errorEl = document.getElementById('login-error');
   const nextInput = document.getElementById('login-next') as HTMLInputElement | null;
+  const passwordInput = document.getElementById('password') as HTMLInputElement | null;
+  const toggle = document.getElementById('password-toggle') as HTMLButtonElement | null;
+  const submitBtn = document.getElementById('login-submit') as HTMLButtonElement | null;
 
   function safeNext(raw: string) {
     if (!raw) return internHome;
@@ -55,15 +66,49 @@ const nextParam = Astro.url.searchParams.get('next') || '';
     window.location.replace(safeNext(nextInput?.value || ''));
   }
 
+  toggle?.addEventListener('click', () => {
+    if (!passwordInput || !toggle) return;
+    const show = passwordInput.type === 'password';
+    passwordInput.type = show ? 'text' : 'password';
+    toggle.textContent = show ? 'Verbergen' : 'Zeigen';
+    toggle.setAttribute('aria-pressed', show ? 'true' : 'false');
+    passwordInput.focus();
+  });
+
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const data = new FormData(form);
-    const password = String(data.get('password') ?? '').trim();
-    const ok = await tryUnlock(password);
-    if (!ok) {
-      if (errorEl) errorEl.hidden = false;
+    if (!form || !passwordInput) return;
+
+    const password = passwordInput.value.trim();
+    if (!password) {
+      if (errorEl) {
+        errorEl.hidden = false;
+        errorEl.textContent = 'Bitte Passwort eingeben.';
+      }
+      passwordInput.focus();
       return;
     }
-    window.location.replace(safeNext(String(data.get('next') ?? '')));
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Prüfen…';
+    }
+
+    const ok = await tryUnlock(password);
+    if (!ok) {
+      if (errorEl) {
+        errorEl.hidden = false;
+        errorEl.textContent = 'Passwort stimmt nicht. Noch einmal versuchen — oder beim Coach nachfragen.';
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Eintreten';
+      }
+      passwordInput.select();
+      passwordInput.focus();
+      return;
+    }
+
+    window.location.replace(safeNext(String(new FormData(form).get('next') ?? '')));
   });
 </script>
