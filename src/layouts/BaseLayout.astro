@@ -25,8 +25,9 @@ const path = stripBase(Astro.url.pathname);
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#5b3d9a" />
     <link rel="icon" type="image/png" href={href('/images/ottv-logo.png')} />
     <link rel="apple-touch-icon" href={href('/images/ottv-logo.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,7 +54,23 @@ const path = stripBase(Astro.url.pathname);
             <span class="brand__sub">Trainingslager · China</span>
           </span>
         </a>
-        <nav class="nav" aria-label="Hauptnavigation">
+
+        <details class="nav-drawer">
+          <summary class="nav-drawer__toggle" aria-label="Menü öffnen">
+            <span class="nav-drawer__bars" aria-hidden="true"></span>
+          </summary>
+          <nav class="nav" aria-label="Hauptnavigation">
+            <a href={href('/')} aria-current={path === '/' ? 'page' : undefined}>Start</a>
+            <a href={href('/blog')} aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
+            <a href={href('/lager')} aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
+            <div class="mode-switch" aria-label="Bereich wählen">
+              <a href={href('/')} class={mode === 'public' ? 'is-active' : undefined}>Öffentlich</a>
+              <a href={href('/intern')} class={mode === 'intern' ? 'is-active' : undefined}>Intern</a>
+            </div>
+          </nav>
+        </details>
+
+        <nav class="nav nav--desktop" aria-label="Hauptnavigation">
           <a href={href('/')} aria-current={path === '/' ? 'page' : undefined}>Start</a>
           <a href={href('/blog')} aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
           <a href={href('/lager')} aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
@@ -73,7 +90,7 @@ const path = stripBase(Astro.url.pathname);
         <p>
           {
             showLogout ? (
-              <button class="btn btn-ghost" type="button" data-camp-logout style="min-height:2.2rem;padding:0.35rem 0.8rem;font-size:0.9rem">
+              <button class="btn btn-ghost" type="button" data-camp-logout style="min-height:2.75rem;padding:0.45rem 1rem;font-size:0.95rem">
                 Abmelden
               </button>
             ) : (
@@ -84,5 +101,14 @@ const path = stripBase(Astro.url.pathname);
       </div>
     </footer>
     <CampAuth />
+    <script>
+      // Close mobile menu after navigating / tapping a link
+      document.querySelectorAll('.nav-drawer .nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+          const drawer = document.querySelector('.nav-drawer');
+          if (drawer instanceof HTMLDetailsElement) drawer.open = false;
+        });
+      });
+    </script>
   </body>
 </html>

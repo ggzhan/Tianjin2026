@@ -69,6 +69,24 @@ import { programWeeks, phoneFreeNote } from '../../data/schedule';
     border-radius: 0.65rem;
     background: var(--bg);
     -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  .prog-scroll::after {
+    content: "← wischen →";
+    display: block;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding: 0.4rem;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  @media (min-width: 900px) {
+    .prog-scroll::after {
+      display: none;
+    }
   }
 
   .prog-table {
@@ -76,18 +94,18 @@ import { programWeeks, phoneFreeNote } from '../../data/schedule';
     min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     line-height: 1.35;
   }
 
   .prog-table th,
   .prog-table td {
-    padding: 0.55rem 0.6rem;
+    padding: 0.45rem 0.5rem;
     border-right: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     vertical-align: top;
     text-align: left;
-    max-width: 9.5rem;
+    max-width: 8.25rem;
   }
 
   .prog-table thead th {
@@ -97,7 +115,7 @@ import { programWeeks, phoneFreeNote } from '../../data/schedule';
     background: var(--surface);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     color: var(--primary);
     white-space: nowrap;
     text-align: center;
@@ -114,11 +132,11 @@ import { programWeeks, phoneFreeNote } from '../../data/schedule';
     background: var(--surface);
     font-family: var(--font-display);
     font-weight: 650;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--primary);
     white-space: nowrap;
-    min-width: 7.25rem;
-    max-width: 7.25rem;
+    min-width: 5.75rem;
+    max-width: 5.75rem;
     border-right: 1px solid color-mix(in oklch, var(--primary) 25%, var(--line));
   }
 
@@ -150,6 +168,24 @@ import { programWeeks, phoneFreeNote } from '../../data/schedule';
   .prog-table td.is-empty {
     color: var(--line);
     text-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .prog-table {
+      font-size: 0.82rem;
+    }
+
+    .prog-table th,
+    .prog-table td {
+      padding: 0.55rem 0.6rem;
+      max-width: 9.5rem;
+    }
+
+    .prog-table__time {
+      min-width: 7.25rem;
+      max-width: 7.25rem;
+      font-size: 0.75rem;
+    }
   }
 
   @media (min-width: 1100px) {
