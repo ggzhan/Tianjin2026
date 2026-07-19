@@ -1,5 +1,6 @@
 ---
 import InternLayout from '../../layouts/InternLayout.astro';
+import { href } from '../../lib/paths';
 ---
 
 <InternLayout title="Camp-Übersicht" description="Internes Handbuch für OTTV Tianjin 2026.">
@@ -8,26 +9,25 @@ import InternLayout from '../../layouts/InternLayout.astro';
   <p class="lead">Alles Wichtige für unterwegs — kompakt, ohne Chat-Suche.</p>
 
   <div class="section-grid" style="margin-top: 2rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-    <a class="callout" href="/intern/programm" style="text-decoration: none; color: inherit">
+    <a class="callout" href={href('/intern/programm')} style="text-decoration: none; color: inherit">
       <strong>Programm</strong>
       <p>Tagesplan vom 22.7. bis 8.8.</p>
     </a>
-    <a class="callout" href="/intern/arrival-card" style="text-decoration: none; color: inherit; border-left-color: var(--primary)">
+    <a class="callout" href={href('/intern/arrival-card')} style="text-decoration: none; color: inherit; border-left-color: var(--primary)">
       <strong>Arrival Card</strong>
       <p>Angaben für die Online-Einreisekarte.</p>
     </a>
-    <a class="callout" href="/intern/adressen" style="text-decoration: none; color: inherit">
+    <a class="callout" href={href('/intern/adressen')} style="text-decoration: none; color: inherit">
       <strong>Adressen</strong>
       <p>Halle und Hotel — DE, 中文, Pinyin.</p>
     </a>
-    <a class="callout" href="/intern/notfall" style="text-decoration: none; color: inherit; border-left-color: var(--primary)">
+    <a class="callout" href={href('/intern/notfall')} style="text-decoration: none; color: inherit; border-left-color: var(--primary)">
       <strong>Notfall</strong>
       <p>Coaches und Schweizer Konsulate.</p>
     </a>
-    <a class="callout" href="/intern/apps" style="text-decoration: none; color: inherit">
+    <a class="callout" href={href('/intern/apps')} style="text-decoration: none; color: inherit">
       <strong>Apps & VPN</strong>
       <p>WeChat, eSIM, was blockiert ist.</p>
     </a>
   </div>
-
 </InternLayout>

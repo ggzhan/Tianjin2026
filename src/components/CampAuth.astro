@@ -1,0 +1,36 @@
+---
+import { href } from '../lib/paths';
+
+interface Props {
+  gate?: boolean;
+}
+
+const { gate = false } = Astro.props;
+---
+
+{
+  gate && (
+    <script>
+      import { isUnlocked } from '../lib/camp-auth';
+      import { href } from '../lib/paths';
+
+      if (!isUnlocked()) {
+        const next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace(`${href('/intern/login')}?next=${next}`);
+      }
+    </script>
+  )
+}
+
+<script>
+  import { lock } from '../lib/camp-auth';
+  import { href } from '../lib/paths';
+
+  document.querySelectorAll('[data-camp-logout]').forEach((el) => {
+    el.addEventListener('click', (event) => {
+      event.preventDefault();
+      lock();
+      window.location.href = href('/intern/login');
+    });
+  });
+</script>

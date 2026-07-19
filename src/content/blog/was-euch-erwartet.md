@@ -11,4 +11,4 @@ Tianjin ist Hafenstadt, Industriezentrum und Tor nach Peking — mit europäisch
 
 Bei uns trainieren wir im Club von **Ma Wenge**: Olympia-Bronze 1992, World-Cup-Sieger und heute Nachwuchsförderer in seiner Heimatstadt. Die Halle liegt zentral neben den Universitäten — Profi-Boden, 20 Tische, Hotel zehn Minuten zu Fuss.
 
-Mehr Rahmen gibt’s auf der Seite [Lager](/lager). Den Ablauf findet ihr nach dem Login unter [Programm](/intern/programm).
+Mehr Rahmen gibt’s auf der Seite [Lager](../lager/). Den Ablauf findet ihr nach dem Login unter [Programm](../intern/programm/).

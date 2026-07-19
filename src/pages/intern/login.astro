@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { href } from '../../lib/paths';
 
 const error = Astro.url.searchParams.get('error');
-const next = Astro.url.searchParams.get('next') || '/intern';
+const nextParam = Astro.url.searchParams.get('next') || '';
 ---
 
 <BaseLayout title="Camp-Login" description="Passwortgeschützter Camp-Bereich für Teilnehmer:innen und Eltern." mode="intern" showLogout={false}>
@@ -11,6 +12,7 @@ const next = Astro.url.searchParams.get('next') || '/intern';
       <p class="eyebrow">Intern</p>
       <h1 style="font-size: 1.85rem">Camp-Bereich</h1>
       <p style="color: var(--muted); margin-top: 0">Gemeinsames Passwort für Spieler:innen und Eltern.</p>
+      <p class="login-error" id="login-error" role="alert" hidden>Passwort stimmt nicht. Noch einmal versuchen.</p>
       {
         error && (
           <p class="login-error" role="alert">
@@ -18,8 +20,8 @@ const next = Astro.url.searchParams.get('next') || '/intern';
           </p>
         )
       }
-      <form method="POST" action="/api/login">
-        <input type="hidden" name="next" value={next} />
+      <form id="camp-login-form">
+        <input type="hidden" name="next" id="login-next" value={nextParam} />
         <label for="password">Passwort</label>
         <input id="password" name="password" type="password" autocomplete="current-password" required autofocus />
         <button class="btn btn-primary" type="submit" style="width: 100%">Eintreten</button>
@@ -27,3 +29,41 @@ const next = Astro.url.searchParams.get('next') || '/intern';
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  import { tryUnlock, isUnlocked } from '../../lib/camp-auth';
+  import { href } from '../../lib/paths';
+
+  const internHome = href('/intern');
+  const form = document.getElementById('camp-login-form') as HTMLFormElement | null;
+  const errorEl = document.getElementById('login-error');
+  const nextInput = document.getElementById('login-next') as HTMLInputElement | null;
+
+  function safeNext(raw: string) {
+    if (!raw) return internHome;
+    try {
+      const url = new URL(raw, window.location.origin);
+      if (!url.pathname.includes('/intern')) return internHome;
+      if (url.pathname.includes('/intern/login')) return internHome;
+      return url.pathname + url.search;
+    } catch {
+      return internHome;
+    }
+  }
+
+  if (isUnlocked()) {
+    window.location.replace(safeNext(nextInput?.value || ''));
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const password = String(data.get('password') ?? '');
+    const ok = await tryUnlock(password);
+    if (!ok) {
+      if (errorEl) errorEl.hidden = false;
+      return;
+    }
+    window.location.replace(safeNext(String(data.get('next') ?? '')));
+  });
+</script>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { href } from '../lib/paths';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -24,8 +25,8 @@ const latest = posts.slice(0, 2);
       <h1 class="hero__brand reveal">Tianjin 2026</h1>
       <p class="hero__line reveal reveal-delay">Zwei Wochen Training mit Ma Wenge.</p>
       <div class="hero__actions reveal reveal-delay-2">
-        <a class="btn btn-primary" href="/blog">Zum Tagebuch</a>
-        <a class="btn btn-ghost" href="/intern" style="border-color: color-mix(in oklch, white 45%, transparent); color: white">
+        <a class="btn btn-primary" href={href('/blog')}>Zum Tagebuch</a>
+        <a class="btn btn-ghost" href={href('/intern')} style="border-color: color-mix(in oklch, white 45%, transparent); color: white">
           Camp-Bereich
         </a>
       </div>
@@ -43,12 +44,12 @@ const latest = posts.slice(0, 2);
         <div class="callout">
           <strong>Tagebuch</strong>
           <p>Unsere Erlebnisse in China!</p>
-          <p><a href="/blog">Zum Tagebuch →</a></p>
+          <p><a href={href('/blog')}>Zum Tagebuch →</a></p>
         </div>
         <div class="callout" style="border-left-color: var(--primary)">
           <strong>Camp-Bereich</strong>
           <p>Programm, Adressen, Apps, Phrasen und Notfallkontakte — mit dem gemeinsamen Camp-Passwort.</p>
-          <p><a href="/intern">Zum Handbuch →</a></p>
+          <p><a href={href('/intern')}>Zum Handbuch →</a></p>
         </div>
       </div>
     </div>
@@ -74,7 +75,7 @@ const latest = posts.slice(0, 2);
           Die öffentliche Seite erzählt die Geschichte — die Details für den Alltag liegen intern.
         </p>
         <p style="margin-top: 1.25rem">
-          <a class="btn btn-secondary" href="/lager">Mehr zum Lager</a>
+          <a class="btn btn-secondary" href={href('/lager')}>Mehr zum Lager</a>
         </p>
       </div>
     </div>
@@ -89,7 +90,7 @@ const latest = posts.slice(0, 2);
           <ul class="blog-list">
             {latest.map((post) => (
               <li class="blog-item">
-                <a href={`/blog/${post.id}`}>
+                <a href={href(`/blog/${post.id}`)}>
                   <div class="blog-item__date">
                     {post.data.pubDate.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </div>

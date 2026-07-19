@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { href } from '../lib/paths';
 ---
 
 <BaseLayout title="Das Lager" description="Rahmen, Stadt und Trainingshintergrund für OTTV Tianjin 2026.">
@@ -53,7 +54,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
       <p class="callout" style="margin-top: 1.5rem">
         Im Lager trainieren wir in seiner Halle: zentral, Profi-Boden, 20 Tische — und das Hotel zehn Minuten zu Fuss.
-        Adressen und Tagesplan stehen im <a href="/intern">Camp-Bereich</a>.
+        Adressen und Tagesplan stehen im <a href={href('/intern')}>Camp-Bereich</a>.
       </p>
     </div>
   </section>

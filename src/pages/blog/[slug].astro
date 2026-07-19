@@ -1,15 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import { href } from '../../lib/paths';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+  }));
+}
 
 const { slug } = Astro.params;
 if (!slug) {
-  return Astro.redirect('/blog');
+  return Astro.redirect(href('/blog'));
 }
 
 const post = await getEntry('blog', slug);
 if (!post || post.data.draft) {
-  return Astro.redirect('/404');
+  return Astro.redirect(href('/404'));
 }
 
 const { Content } = await render(post);
@@ -51,7 +59,7 @@ const { Content } = await render(post);
     <div class="wrap diary-post__inner prose" style="margin-top: 2rem">
       <Content />
       <p style="margin-top: 2.5rem">
-        <a href="/blog">← Zum Tagebuch</a>
+        <a href={href('/blog')}>← Zum Tagebuch</a>
       </p>
     </div>
   </article>

@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { href } from '../lib/paths';
 ---
 
 <BaseLayout title="Seite nicht gefunden">
   <section class="wrap narrow miss">
     <p class="eyebrow">404</p>
     <h1>Seite nicht gefunden</h1>
-    <p>Zurück zur <a href="/">Startseite</a> oder zum <a href="/blog">Blog</a>.</p>
+    <p>Zurück zur <a href={href('/')}>Startseite</a> oder zum <a href={href('/blog')}>Tagebuch</a>.</p>
   </section>
 </BaseLayout>
 

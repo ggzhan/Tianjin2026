@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import CampAuth from '../components/CampAuth.astro';
+import { href, stripBase } from '../lib/paths';
 
 interface Props {
   title: string;
@@ -10,13 +12,13 @@ interface Props {
 
 const {
   title,
-  description = 'OTTV Trainingslager Tianjin 2026 — Blog und Camp-Infos für Spieler:innen und Eltern.',
+  description = 'OTTV Trainingslager Tianjin 2026 — Tagebuch und Camp-Infos.',
   mode = 'public',
   showLogout = mode === 'intern',
 } = Astro.props;
 
 const pageTitle = title === 'OTTV Tianjin 2026' ? title : `${title} · OTTV Tianjin 2026`;
-const path = Astro.url.pathname;
+const path = stripBase(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -25,7 +27,7 @@ const path = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={href('/favicon.svg')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,17 +39,17 @@ const path = Astro.url.pathname;
   <body data-mode={mode}>
     <header class="site-header">
       <div class="wrap site-header__inner">
-        <a class="brand" href="/">
+        <a class="brand" href={href('/')}>
           <span class="brand__name">OTTV Tianjin 2026</span>
           <span class="brand__sub">Trainingslager · China</span>
         </a>
         <nav class="nav" aria-label="Hauptnavigation">
-          <a href="/" aria-current={path === '/' ? 'page' : undefined}>Start</a>
-          <a href="/blog" aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
-          <a href="/lager" aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
+          <a href={href('/')} aria-current={path === '/' ? 'page' : undefined}>Start</a>
+          <a href={href('/blog')} aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
+          <a href={href('/lager')} aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
           <div class="mode-switch" aria-label="Bereich wählen">
-            <a href="/" class={mode === 'public' ? 'is-active' : undefined}>Öffentlich</a>
-            <a href="/intern" class={mode === 'intern' ? 'is-active' : undefined}>Intern</a>
+            <a href={href('/')} class={mode === 'public' ? 'is-active' : undefined}>Öffentlich</a>
+            <a href={href('/intern')} class={mode === 'intern' ? 'is-active' : undefined}>Intern</a>
           </div>
         </nav>
       </div>
@@ -61,17 +63,16 @@ const path = Astro.url.pathname;
         <p>
           {
             showLogout ? (
-              <form method="POST" action="/api/logout" style="display:inline">
-                <button class="btn btn-ghost" type="submit" style="min-height:2.2rem;padding:0.35rem 0.8rem;font-size:0.9rem">
-                  Abmelden
-                </button>
-              </form>
+              <button class="btn btn-ghost" type="button" data-camp-logout style="min-height:2.2rem;padding:0.35rem 0.8rem;font-size:0.9rem">
+                Abmelden
+              </button>
             ) : (
-              <a href="/intern">Camp-Bereich</a>
+              <a href={href('/intern')}>Camp-Bereich</a>
             )
           }
         </p>
       </div>
     </footer>
+    <CampAuth />
   </body>
 </html>

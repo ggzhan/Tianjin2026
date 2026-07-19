@@ -9,4 +9,4 @@ coverAlt: "Tischtennisschläger und Ball auf blauem Tisch"
 
 Willkommen im öffentlichen Lager-Tagebuch. Alle Camp-Teilnehmer:innen können hier mitmachen: kurze Texte, Fotos aus der Halle und von Ausflügen — und später auch Videos.
 
-Wir updaten etwa alle ein bis zwei Tage. Der detaillierte Tagesplan und die praktischen Infos bleiben im passwortgeschützten [Camp-Bereich](/intern).
+Wir updaten etwa alle ein bis zwei Tage. Der detaillierte Tagesplan und die praktischen Infos bleiben im passwortgeschützten [Camp-Bereich](../intern/).
