@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latest = posts.slice(0, 2);
+---
+
+<BaseLayout title="OTTV Tianjin 2026" description="Öffentlicher Blog und privates Camp-Handbuch für das OTTV Trainingslager Tianjin 2026.">
+  <section class="hero">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1587990208222-e7d1f59878a8?auto=format&fit=crop&w=2000&q=80"
+        alt=""
+        width="2000"
+        height="1333"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="hero__content">
+      <p class="eyebrow reveal" style="color: var(--accent)">OTTV · Trainingslager</p>
+      <h1 class="hero__brand reveal">Tianjin 2026</h1>
+      <p class="hero__line reveal reveal-delay">Zwei Wochen Training mit Ma Wenge.</p>
+      <div class="hero__actions reveal reveal-delay-2">
+        <a class="btn btn-primary" href="/blog">Zum Tagebuch</a>
+        <a class="btn btn-ghost" href="/intern" style="border-color: color-mix(in oklch, white 45%, transparent); color: white">
+          Camp-Bereich
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap section-grid split">
+      <div>
+        <p class="eyebrow">Das Lager</p>
+        <h2>Tischtennis in der Heimat von Ma Wenge</h2>
+        <p class="lead">Intensives Training, neue Routinen, China hautnah — vom ersten Aufschlag bis zum letzten Abendessen.</p>
+      </div>
+      <div class="section-grid">
+        <div class="callout">
+          <strong>Tagebuch</strong>
+          <p>Unsere Erlebnisse in China!</p>
+          <p><a href="/blog">Zum Tagebuch →</a></p>
+        </div>
+        <div class="callout" style="border-left-color: var(--primary)">
+          <strong>Camp-Bereich</strong>
+          <p>Programm, Adressen, Apps, Phrasen und Notfallkontakte — mit dem gemeinsamen Camp-Passwort.</p>
+          <p><a href="/intern">Zum Handbuch →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="wrap section-grid split">
+      <div>
+        <img
+          src="https://images.unsplash.com/photo-1676827613262-5fba25cee5fd?auto=format&fit=crop&w=1200&q=80"
+          alt="Zwei Tischtennisschläger und ein orangefarbener Ball auf blauem Tisch"
+          width="1200"
+          height="800"
+          loading="lazy"
+          style="border-radius: 0.75rem; width: 100%; aspect-ratio: 4/3; object-fit: cover;"
+        />
+      </div>
+      <div>
+        <p class="eyebrow">Das Lager</p>
+        <h2>Fokus in der Halle, Abenteuer in der Stadt</h2>
+        <p>
+          Intensives Training im Club von Ma Wenge, Ausflüge in Tianjin und Peking, und ein Team, das zusammen unterwegs ist.
+          Die öffentliche Seite erzählt die Geschichte — die Details für den Alltag liegen intern.
+        </p>
+        <p style="margin-top: 1.25rem">
+          <a class="btn btn-secondary" href="/lager">Mehr zum Lager</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {
+    latest.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <p class="eyebrow">Aus dem Tagebuch</p>
+          <h2>Neueste Einträge</h2>
+          <ul class="blog-list">
+            {latest.map((post) => (
+              <li class="blog-item">
+                <a href={`/blog/${post.id}`}>
+                  <div class="blog-item__date">
+                    {post.data.pubDate.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </div>
+                  <h2>{post.data.title}</h2>
+                  <p>{post.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

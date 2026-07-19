@@ -1,0 +1,39 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/intern', label: 'Übersicht' },
+  { href: '/intern/programm', label: 'Programm' },
+  { href: '/intern/arrival-card', label: 'Arrival Card' },
+  { href: '/intern/adressen', label: 'Adressen' },
+  { href: '/intern/apps', label: 'Apps & VPN' },
+  { href: '/intern/woerter', label: 'Wörter & Phrasen' },
+  { href: '/intern/notfall', label: 'Notfall' },
+];
+---
+
+<BaseLayout title={title} description={description} mode="intern">
+  <div class="wrap intern-shell">
+    <aside class="intern-nav" aria-label="Camp-Navigation">
+      <div class="intern-nav__label">Camp-Handbuch</div>
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+    </aside>
+    <div>
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

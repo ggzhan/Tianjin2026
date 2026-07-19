@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const error = Astro.url.searchParams.get('error');
+const next = Astro.url.searchParams.get('next') || '/intern';
+---
+
+<BaseLayout title="Camp-Login" description="Passwortgeschützter Camp-Bereich für Teilnehmer:innen und Eltern." mode="intern" showLogout={false}>
+  <div class="wrap">
+    <div class="login-panel">
+      <p class="eyebrow">Intern</p>
+      <h1 style="font-size: 1.85rem">Camp-Bereich</h1>
+      <p style="color: var(--muted); margin-top: 0">Gemeinsames Passwort für Spieler:innen und Eltern.</p>
+      {
+        error && (
+          <p class="login-error" role="alert">
+            Passwort stimmt nicht. Noch einmal versuchen.
+          </p>
+        )
+      }
+      <form method="POST" action="/api/login">
+        <input type="hidden" name="next" value={next} />
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required autofocus />
+        <button class="btn btn-primary" type="submit" style="width: 100%">Eintreten</button>
+      </form>
+    </div>
+  </div>
+</BaseLayout>

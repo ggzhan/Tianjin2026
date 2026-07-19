@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry, render } from 'astro:content';
+
+const { slug } = Astro.params;
+if (!slug) {
+  return Astro.redirect('/blog');
+}
+
+const post = await getEntry('blog', slug);
+if (!post || post.data.draft) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="section diary-post">
+    <div class="wrap diary-post__inner">
+      <p class="eyebrow">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toLocaleDateString('de-CH', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </time>
+        {' · '}
+        {post.data.author}
+      </p>
+      <h1>{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+    </div>
+
+    {
+      post.data.cover && (
+        <div class="diary-post__cover wrap">
+          <img
+            src={post.data.cover}
+            alt={post.data.coverAlt || ''}
+            width="1600"
+            height="900"
+            fetchpriority="high"
+          />
+        </div>
+      )
+    }
+
+    <div class="wrap diary-post__inner prose" style="margin-top: 2rem">
+      <Content />
+      <p style="margin-top: 2.5rem">
+        <a href="/blog">← Zum Tagebuch</a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .diary-post__inner {
+    width: min(100% - 2rem, 42rem);
+  }
+
+  .diary-post__cover {
+    width: min(100% - 2rem, 52rem);
+    margin-top: 1.5rem;
+  }
+
+  .diary-post__cover img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+
+  .diary-post :global(.prose img),
+  .diary-post :global(.prose video) {
+    width: 100%;
+    border-radius: 0.65rem;
+    margin: 1.25rem 0;
+  }
+
+  .diary-post :global(.prose video) {
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
+  }
+</style>

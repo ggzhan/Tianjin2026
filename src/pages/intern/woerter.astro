@@ -1,0 +1,36 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { phrases, ttTerms } from '../../data/camp';
+---
+
+<InternLayout title="Wörter & Phrasen" description="Nützliche Sätze und Tischtennis-Begriffe.">
+  <p class="eyebrow">Sprache</p>
+  <h1>Wörter & Phrasen</h1>
+  <p class="lead">Deutsch · Chinesisch · Pinyin — zum Mitlesen und Vorzeigen.</p>
+
+  <h2 style="margin-top: 2rem">Alltag</h2>
+  <div class="phrase-grid">
+    {
+      phrases.map((p) => (
+        <div class="phrase">
+          <div class="phrase__de">{p.de}</div>
+          <div class="phrase__zh">{p.zh}</div>
+          <div class="phrase__py">{p.py}</div>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2 style="margin-top: 2.5rem">Tischtennis</h2>
+  <div class="phrase-grid">
+    {
+      ttTerms.map((p) => (
+        <div class="phrase">
+          <div class="phrase__de">{p.de}</div>
+          <div class="phrase__zh">{p.zh}</div>
+          <div class="phrase__py">{p.py}</div>
+        </div>
+      ))
+    }
+  </div>
+</InternLayout>

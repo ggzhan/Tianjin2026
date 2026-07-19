@@ -1,0 +1,95 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { arrivalCardCommon, arrivalCardInviter } from '../../data/arrival';
+---
+
+<InternLayout title="Arrival Card" description="Angaben für die Online-Arrival-Card vor der Einreise.">
+  <p class="eyebrow">Einreise</p>
+  <h1>Arrival Card</h1>
+  <p class="lead">
+    Vor der Ankunft online ausfüllen. Unten die gemeinsamen Camp-Angaben zum Abschreiben.
+  </p>
+
+  <div class="callout" style="margin: 1.5rem 0 2rem">
+    <strong>Tipp</strong>
+    <p>
+      Formular vor dem Flug ausfüllen (VPN/eSIM kann helfen). Persönliche Daten (Pass, Name usw.)
+      trägt jede Person selbst ein — hier nur die gemeinsamen Reiseangaben.
+    </p>
+  </div>
+
+  <h2>Gemeinsame Angaben</h2>
+  <dl class="field-list">
+    {
+      arrivalCardCommon.map((field) => (
+        <div class="field-row">
+          <dt>{field.label}</dt>
+          <dd>{field.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <h2 style="margin-top: 2.25rem">Einladende Stelle</h2>
+  <p class="field-question">{arrivalCardInviter.question}</p>
+  <div class="callout" style="margin: 1rem 0 1.25rem; border-left-color: var(--primary)">
+    <strong>Ohne Visum (visumsfrei)</strong>
+    <p>{arrivalCardInviter.withoutVisa}</p>
+  </div>
+  <div class="callout" style="margin-bottom: 1.25rem">
+    <strong>Mit Visum</strong>
+    <p>{arrivalCardInviter.withVisaNote}</p>
+  </div>
+  <dl class="field-list">
+    {
+      arrivalCardInviter.entity.map((field) => (
+        <div class="field-row">
+          <dt>{field.label}</dt>
+          <dd>{field.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</InternLayout>
+
+<style>
+  .field-question {
+    font-weight: 650;
+    margin: 0.5rem 0 0;
+  }
+
+  .field-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .field-row {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: 640px) {
+    .field-row {
+      grid-template-columns: minmax(12rem, 0.9fr) 1.3fr;
+      gap: 1rem;
+      align-items: baseline;
+    }
+  }
+
+  .field-row dt {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 0.9rem;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .field-row dd {
+    margin: 0;
+    font-size: 1.02rem;
+    user-select: all;
+  }
+</style>

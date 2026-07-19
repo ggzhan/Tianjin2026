@@ -1,0 +1,25 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { hall, hotel } from '../../data/camp';
+---
+
+<InternLayout title="Adressen" description="Halle und Hotel in Tianjin.">
+  <p class="eyebrow">Vor Ort</p>
+  <h1>Adressen</h1>
+  <p class="lead">Zum Zeigen im Taxi oder in DiDi — am besten Screenshot speichern.</p>
+
+  <div class="address-block">
+    <h3>{hall.name}</h3>
+    <p>{hall.en}</p>
+    <p class="zh">{hall.zh}</p>
+    <p class="hint">Aussprache: {hall.pinyin}</p>
+    <p class="hint">{hall.note}</p>
+  </div>
+
+  <div class="address-block">
+    <h3>{hotel.name}</h3>
+    <p>{hotel.en}</p>
+    <p class="zh">{hotel.zh}</p>
+    <p class="hint">{hotel.note}</p>
+  </div>
+</InternLayout>

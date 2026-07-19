@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  mode?: 'public' | 'intern';
+  showLogout?: boolean;
+}
+
+const {
+  title,
+  description = 'OTTV Trainingslager Tianjin 2026 — Blog und Camp-Infos für Spieler:innen und Eltern.',
+  mode = 'public',
+  showLogout = mode === 'intern',
+} = Astro.props;
+
+const pageTitle = title === 'OTTV Tianjin 2026' ? title : `${title} · OTTV Tianjin 2026`;
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+  </head>
+  <body data-mode={mode}>
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__name">OTTV Tianjin 2026</span>
+          <span class="brand__sub">Trainingslager · China</span>
+        </a>
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a href="/" aria-current={path === '/' ? 'page' : undefined}>Start</a>
+          <a href="/blog" aria-current={path.startsWith('/blog') ? 'page' : undefined}>Tagebuch</a>
+          <a href="/lager" aria-current={path.startsWith('/lager') ? 'page' : undefined}>Lager</a>
+          <div class="mode-switch" aria-label="Bereich wählen">
+            <a href="/" class={mode === 'public' ? 'is-active' : undefined}>Öffentlich</a>
+            <a href="/intern" class={mode === 'intern' ? 'is-active' : undefined}>Intern</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap site-footer__inner">
+        <p>OTTV Tianjin 2026 · Training mit Ma Wenge</p>
+        <p>
+          {
+            showLogout ? (
+              <form method="POST" action="/api/logout" style="display:inline">
+                <button class="btn btn-ghost" type="submit" style="min-height:2.2rem;padding:0.35rem 0.8rem;font-size:0.9rem">
+                  Abmelden
+                </button>
+              </form>
+            ) : (
+              <a href="/intern">Camp-Bereich</a>
+            )
+          }
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

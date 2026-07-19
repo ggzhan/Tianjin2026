@@ -1,0 +1,26 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { contacts } from '../../data/camp';
+---
+
+<InternLayout title="Notfallkontakte" description="Coaches und Schweizer Vertretungen.">
+  <p class="eyebrow">Sicherheit</p>
+  <h1>Notfallkontakte</h1>
+  <p class="lead">Speichern — und WeChat der Coaches hinzufügen.</p>
+
+  <div style="margin-top: 1.5rem">
+    {
+      contacts.map((c) => (
+        <div class="address-block">
+          <h3>{c.name}</h3>
+          {c.phone && (
+            <p>
+              <a href={`tel:${c.phone.replace(/\s|\//g, '')}`}>{c.phone}</a>
+            </p>
+          )}
+          {c.wechat && <p class="hint">WeChat: {c.wechat}</p>}
+        </div>
+      ))
+    }
+  </div>
+</InternLayout>

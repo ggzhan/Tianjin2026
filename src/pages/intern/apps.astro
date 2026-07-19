@@ -1,0 +1,53 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { appRows } from '../../data/camp';
+---
+
+<InternLayout title="Apps & VPN" description="Internet, WeChat und Alternativen in China.">
+  <p class="eyebrow">Vernetzt bleiben</p>
+  <h1>Apps & VPN</h1>
+  <p class="lead">WhatsApp, Google und Co. sind blockiert — vorher vorbereiten.</p>
+
+  <div class="prose" style="margin-top: 1.5rem">
+    <h2>VPN & eSIM</h2>
+    <p>
+      <strong>Funktionieren u. a.:</strong> Astrill, Mullvad, LetsVPN (oft bis 5 Geräte). NordVPN und ExpressVPN oft nicht.
+    </p>
+    <p>
+      <strong>eSIMs</strong> wie Nomad oder Airalo geben unblockiertes Internet am Handy — dann oft kein VPN nötig.
+      Sobald WLAN genutzt wird, bist du wieder im chinesischen Netz (blockiert).
+    </p>
+    <p>Google Translate offline vorher einrichten.</p>
+
+    <h2>WeChat</h2>
+    <p>
+      WeChat ist Chat, Zahlung, QR-Codes und Alltag in einem. Setup für WeChat Pay:
+      <a href="https://www.examinechina.com/wechat-pay-how-to-set-up/" target="_blank" rel="noopener">examinechina.com</a>.
+      Alternative: Alipay (oft einfacher, extra App). Kreditkarte hinterlegen — kein Prepaid. Internet für Zahlungen nötig.
+    </p>
+
+    <h2>App-Übersicht</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Blockiert</th>
+          <th>In China</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          appRows.map((row) => (
+            <tr>
+              <td>{row.blocked}</td>
+              <td>{row.cn}</td>
+              <td>
+                <span class="tag">{row.req}</span>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</InternLayout>

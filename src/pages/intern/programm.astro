@@ -1,0 +1,162 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+import { programWeeks, phoneFreeNote } from '../../data/schedule';
+---
+
+<InternLayout title="Programm" description="Tagesprogramm OTTV Tianjin 2026.">
+  <p class="eyebrow">Zeitplan</p>
+  <h1>Programm</h1>
+  <p class="lead">22. Juli – 8. August 2026. Tage mit * sind noch nicht definitiv.</p>
+
+  <div class="callout" style="margin: 1.5rem 0 1.75rem">
+    <strong>Handyregel</strong>
+    <p>{phoneFreeNote}</p>
+  </div>
+
+  {
+    programWeeks.map((week) => (
+      <section class="prog-week">
+        <h2 class="prog-week__title">{week.title}</h2>
+        <div class="prog-scroll">
+          <table class="prog-table">
+            <thead>
+              <tr>
+                <th scope="col" class="prog-table__time">
+                  Zeit
+                </th>
+                {week.days.map((day) => (
+                  <th scope="col" class:list={[day.tentative && 'is-tentative']}>
+                    {day.label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {week.rows.map((row) => (
+                <tr>
+                  <th scope="row" class="prog-table__time">
+                    {row.time}
+                  </th>
+                  {row.cells.map((cell, i) => (
+                    <td class:list={[week.days[i]?.tentative && 'is-tentative', !cell && 'is-empty']}>
+                      {cell ? cell.split('\n').map((line, li) => (li === 0 ? line : [<br />, line])) : '·'}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))
+  }
+</InternLayout>
+
+<style>
+  .prog-week {
+    margin-bottom: 2.5rem;
+  }
+
+  .prog-week__title {
+    font-size: 1.2rem;
+    margin: 0 0 0.85rem;
+  }
+
+  .prog-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    border: 1px solid var(--line);
+    border-radius: 0.65rem;
+    background: var(--bg);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .prog-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .prog-table th,
+  .prog-table td {
+    padding: 0.55rem 0.6rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    text-align: left;
+    max-width: 9.5rem;
+  }
+
+  .prog-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--surface);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--primary);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .prog-table thead th.is-tentative {
+    color: oklch(0.45 0.14 35);
+  }
+
+  .prog-table__time {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: var(--surface);
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 0.75rem;
+    color: var(--primary);
+    white-space: nowrap;
+    min-width: 7.25rem;
+    max-width: 7.25rem;
+    border-right: 1px solid color-mix(in oklch, var(--primary) 25%, var(--line));
+  }
+
+  .prog-table thead .prog-table__time {
+    z-index: 4;
+    text-align: left;
+  }
+
+  .prog-table tbody th.prog-table__time {
+    background: color-mix(in oklch, var(--surface) 88%, var(--bg));
+  }
+
+  .prog-table tbody tr:nth-child(even) td {
+    background: color-mix(in oklch, var(--surface) 55%, var(--bg));
+  }
+
+  .prog-table tbody tr:nth-child(even) th.prog-table__time {
+    background: color-mix(in oklch, var(--surface) 70%, var(--bg));
+  }
+
+  .prog-table td.is-tentative {
+    background: color-mix(in oklch, var(--accent) 8%, var(--bg));
+  }
+
+  .prog-table tbody tr:nth-child(even) td.is-tentative {
+    background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+  }
+
+  .prog-table td.is-empty {
+    color: var(--line);
+    text-align: center;
+  }
+
+  @media (min-width: 1100px) {
+    .prog-table th,
+    .prog-table td {
+      max-width: 10.5rem;
+      font-size: 0.85rem;
+    }
+  }
+</style>
