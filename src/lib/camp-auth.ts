@@ -30,7 +30,7 @@ export function lock(): void {
 }
 
 export async function tryUnlock(password: string): Promise<boolean> {
-  const hash = await sha256Hex(password);
+  const hash = await sha256Hex(password.trim());
   if (hash !== getPasswordHash()) return false;
   unlock();
   return true;

@@ -58,7 +58,7 @@ const nextParam = Astro.url.searchParams.get('next') || '';
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const data = new FormData(form);
-    const password = String(data.get('password') ?? '');
+    const password = String(data.get('password') ?? '').trim();
     const ok = await tryUnlock(password);
     if (!ok) {
       if (errorEl) errorEl.hidden = false;

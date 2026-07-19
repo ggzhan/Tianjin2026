@@ -200,9 +200,9 @@ p:last-child {
 
 .brand__logo {
   display: block;
-  height: 2.4rem;
+  height: 3.5rem;
   width: auto;
-  max-width: 7.5rem;
+  max-width: 11rem;
   object-fit: contain;
 }
 
@@ -227,8 +227,8 @@ p:last-child {
 
 @media (max-width: 520px) {
   .brand__logo {
-    height: 2rem;
-    max-width: 5.5rem;
+    height: 2.85rem;
+    max-width: 8.5rem;
   }
 
   .brand__name {
@@ -556,9 +556,9 @@ p:last-child {
 
 .hero__logo {
   display: block;
-  width: min(16rem, 55vw);
+  width: min(22rem, 72vw);
   height: auto;
-  margin-bottom: 1rem;
+  margin-bottom: 1.15rem;
   filter: drop-shadow(0 2px 12px oklch(0 0 0 / 0.35));
 }
 
