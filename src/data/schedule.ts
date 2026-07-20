@@ -79,7 +79,7 @@ export const programWeeks: ProgramWeek[] = [
       },
       {
         time: "17:00–17:30",
-        cells: ["", "Gui Jie", "Teammeeting", "Freizeit", "Teammeeting", "", "Freizeit", "Freizeit", "Teammeeting"],
+        cells: ["", "Peking Ente Abendessen", "Teammeeting", "Freizeit", "Teammeeting", "", "Freizeit", "Freizeit", "Teammeeting"],
       },
       {
         time: "Abendessen 18:30",
