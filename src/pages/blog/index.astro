@@ -12,9 +12,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   <section class="section">
     <div class="wrap diary">
       <p class="eyebrow">Öffentlich</p>
-      <h1>Lager-Tagebuch</h1>
+      <h1>Willkommen zu unserem Chinareise-Blog!</h1>
       <p class="lead">
-        Geschrieben von den Teilnehmer:innen. Alle ein bis zwei Tage ein neuer Eintrag — mit Text, Fotos und bald auch Videos.
+        Das Lager-Tagebuch der Teilnehmer:innen. Alle ein bis zwei Tage ein neuer Eintrag — mit Text, Fotos und bald auch Videos.
       </p>
 
       <ol class="diary-feed">
@@ -33,7 +33,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
                   post.data.cover && (
                     <div class="diary-entry__media">
                       <img
-                        src={post.data.cover}
+                        src={post.data.cover.startsWith('http') ? post.data.cover : href(post.data.cover)}
                         alt={post.data.coverAlt || ''}
                         width="1200"
                         height="675"

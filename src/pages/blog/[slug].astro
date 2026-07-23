@@ -46,7 +46,7 @@ const { Content } = await render(post);
       post.data.cover && (
         <div class="diary-post__cover wrap">
           <img
-            src={post.data.cover}
+            src={post.data.cover.startsWith('http') ? post.data.cover : href(post.data.cover)}
             alt={post.data.coverAlt || ''}
             width="1600"
             height="900"
