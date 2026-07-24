@@ -1,0 +1,21 @@
+---
+description: Swiss German orthography — never use ß, always ss
+alwaysApply: true
+---
+
+# German orthography (Swiss)
+
+All user-facing German copy on this site uses Swiss spelling: **no ß — only ss**.
+
+| Avoid | Use |
+| --- | --- |
+| Spaß | Spass |
+| Fuß | Fuss |
+| Straße | Strasse |
+| groß | gross |
+| heiß | heiss |
+| schließen | schliessen |
+| fließen | fliessen |
+| daß | dass |
+
+Apply this in pages, blog posts, data strings, UI labels, and alt text.

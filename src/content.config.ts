@@ -10,6 +10,7 @@ const blog = defineCollection({
     author: z.string().default("Lager-Team"),
     cover: z.string().optional(),
     coverAlt: z.string().optional(),
+    gallery: z.boolean().default(false),
     draft: z.boolean().default(false),
   }),
 });

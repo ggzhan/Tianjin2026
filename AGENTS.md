@@ -8,6 +8,12 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## German copy
+
+Use Swiss German orthography for all user-facing text: **never write ß — always use ss**.
+
+Examples: Spass, Fuss, Strasse, dass, gross, heiss, schliessen, fliessen.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

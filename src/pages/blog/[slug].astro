@@ -21,10 +21,11 @@ if (!post || post.data.draft) {
 }
 
 const { Content } = await render(post);
+const isGallery = post.data.gallery;
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="section diary-post">
+  <article class:list={['section', 'diary-post', isGallery && 'diary-post--gallery']}>
     <div class="wrap diary-post__inner">
       <p class="eyebrow">
         <time datetime={post.data.pubDate.toISOString()}>
@@ -56,7 +57,7 @@ const { Content } = await render(post);
       )
     }
 
-    <div class="wrap diary-post__inner prose" style="margin-top: 2rem">
+    <div class:list={['wrap', 'prose', isGallery ? 'diary-post__gallery' : 'diary-post__inner']} style="margin-top: 2rem">
       <Content />
       <p style="margin-top: 2.5rem">
         <a href={href('/blog')}>← Zum Tagebuch</a>
@@ -70,9 +71,17 @@ const { Content } = await render(post);
     width: min(100% - 2rem, 42rem);
   }
 
+  .diary-post__gallery {
+    width: min(100% - 1.5rem, 64rem);
+  }
+
   .diary-post__cover {
     width: min(100% - 2rem, 52rem);
     margin-top: 1.5rem;
+  }
+
+  .diary-post--gallery .diary-post__cover {
+    width: min(100% - 1.5rem, 64rem);
   }
 
   .diary-post__cover img {
@@ -92,5 +101,79 @@ const { Content } = await render(post);
   .diary-post :global(.prose video) {
     aspect-ratio: 16 / 9;
     background: var(--ink);
+    display: block;
+  }
+
+  .diary-post :global(.gallery) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 1.35rem 0 1.75rem;
+  }
+
+  @media (min-width: 720px) {
+    .diary-post :global(.gallery) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+
+  .diary-post :global(.gallery figure) {
+    margin: 0;
+    border-radius: 0.55rem;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .diary-post :global(.gallery img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .diary-post :global(.gallery figure.span-2) {
+    grid-column: span 2;
+  }
+
+  .diary-post :global(.gallery figure.span-2 img) {
+    aspect-ratio: 16 / 10;
+  }
+
+  .diary-post :global(.gallery-caption) {
+    margin: -0.75rem 0 1.5rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .diary-post :global(.video-stack) {
+    display: grid;
+    gap: 1rem;
+    margin: 1.35rem 0 1.75rem;
+  }
+
+  @media (min-width: 860px) {
+    .diary-post :global(.video-stack) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .diary-post :global(.video-stack video) {
+    margin: 0;
+    width: 100%;
+    max-height: 34rem;
+    height: auto;
+    object-fit: contain;
+    background: var(--ink);
+    justify-self: center;
+  }
+
+  @media (min-width: 860px) {
+    .diary-post :global(.video-stack video) {
+      max-height: 28rem;
+    }
   }
 </style>

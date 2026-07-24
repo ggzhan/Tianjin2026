@@ -1,0 +1,133 @@
+---
+import InternLayout from '../../layouts/InternLayout.astro';
+
+const schedule = [
+  { when: 'Anreise', who: 'Gerald, Julian' },
+  { when: '24./25.7.', who: 'Adrian, Aradhya' },
+  { when: '26./27.7.', who: 'Seraina, Celeste' },
+  { when: '28./29.7.', who: 'Levi, Akhyata' },
+  { when: '30./31.7.', who: 'Andrin, Marc, Joe' },
+  { when: '1./2.8.', who: 'Ilvi, Ved' },
+  { when: '3./4.8.', who: 'Oscar, Jakob Aaron' },
+  { when: '5./6.8.', who: 'Michael, Michal B.' },
+  { when: 'Rückreise', who: 'Sonja, Michal K.' },
+];
+
+const mustTopics = [
+  'Lieblings-Tischtennisübung der letzten zwei Tage — und warum',
+  'Und/Oder die Übung, die am wenigsten Spass gemacht hat — und warum',
+  'Was wir gegessen haben (Halle, Hotel, Restaurant …)',
+  'Ein chinesisches Wort oder ein Satz, den du gelernt hast (mit Bedeutung)',
+  'Name von deinem / einem Trainingspartner',
+];
+
+const extraIdeas = [
+  'Was war heute anders als beim Training zu Hause?',
+  'Ein Moment mit Ma Wenge oder den chinesischen Trainern',
+  'Was hat dich in der Halle oder in der Stadt überrascht?',
+  'Geräusche, Gerüche, Hitze — was war neu für dich?',
+  'Ein lustiger Missverständnis-Moment (Sprache, Essen, Verkehr …)',
+  'Was hast du einem Teamkollegen / einer Teamkollegin beigebracht — oder umgekehrt?',
+  'Dein Highlight ausserhalb des Tisches (Stadt, Park, Shop, Busfahrt …)',
+  'Was würdest du jemand zu Hause erzählen, der noch nie in China war?',
+  'Ein Foto-Moment, den du gerne beschrieben hättest',
+  'Was nimmst du fürs nächste Training mit?',
+];
+---
+
+<InternLayout title="Bericht" description="Anleitung und Einteilung für die Tagebuch-Berichte.">
+  <p class="eyebrow">Tagebuch</p>
+  <h1>Bericht</h1>
+  <p class="lead">
+    Kurze Anleitung für euren Eintrag im öffentlichen Tagebuch — was rein muss, und wer wann dran ist.
+  </p>
+
+  <h2 style="margin-top: 1.75rem">Einteilung</h2>
+  <p>Wer schreibt für welchen Zeitraum (zu zweit / zu dritt absprechen und einen gemeinsamen Text liefern):</p>
+  <dl class="field-list schedule-list">
+    {
+      schedule.map((row) => (
+        <div class="field-row">
+          <dt>{row.when}</dt>
+          <dd>{row.who}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="callout" style="margin: 2rem 0">
+    <strong>Regel</strong>
+    <p>
+      Mindestens <strong>8 Sätze</strong> über die letzten zwei Tage. Schreib so, dass Eltern und
+      Freunde zu Hause mitfiebern können — ehrlich, konkret, mit kleinen Details.
+    </p>
+  </div>
+
+  <h2>Das sollte rein</h2>
+  <p>Beantworte diese Punkte (dürfen in den Text einfliessen, nicht als Liste wirken):</p>
+  <ol class="topic-list">
+    {mustTopics.map((topic) => <li>{topic}</li>)}
+  </ol>
+
+  <h2 style="margin-top: 2.25rem">Weitere Ideen</h2>
+  <p>Wenn du noch Platz hast — oder feststeckst — greif zu einem dieser Themen:</p>
+  <ul class="idea-list">
+    {extraIdeas.map((idea) => <li>{idea}</li>)}
+  </ul>
+</InternLayout>
+
+<style>
+  .topic-list,
+  .idea-list {
+    margin: 1rem 0 0;
+    padding-left: 1.25rem;
+    max-width: 42rem;
+  }
+
+  .topic-list li,
+  .idea-list li {
+    margin: 0.55rem 0;
+  }
+
+  .topic-list {
+    font-weight: 550;
+  }
+
+  .schedule-list {
+    margin-top: 1rem;
+  }
+
+  .field-list {
+    margin: 1rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .field-row {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  @media (min-width: 640px) {
+    .field-row {
+      grid-template-columns: minmax(10rem, 0.7fr) 1.3fr;
+      gap: 1rem;
+      align-items: baseline;
+    }
+  }
+
+  .field-row dt {
+    font-family: var(--font-display);
+    font-weight: 650;
+    font-size: 0.9rem;
+    color: var(--primary);
+    margin: 0;
+  }
+
+  .field-row dd {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+</style>
