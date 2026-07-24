@@ -3,7 +3,7 @@ export const hall = {
   en: "Nr. 379, Anshan West-Strasse, Xingye Digital Building, 3. Stock, Tianjin",
   zh: "鞍山西道379号兴业数码三楼",
   pinyin: "Anshan Xidao 379 hao, Xingye Shuma san lou",
-  note: "In einem Geschäftsgebäude, zentral neben Nankai University und Tianjin University. Profi-Boden, 20 feste Tische. Hotel ca. 10 Min. zu Fuss.",
+  note: "In einem Geschäftsgebäude, zentral neben Nankai University und Tianjin University. Profi-Boden, 27 feste Tische. Hotel ca. 10 Min. zu Fuss.",
 };
 
 export const hotel = {

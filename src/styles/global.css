@@ -291,7 +291,7 @@ p:last-child {
   }
 }
 
-.nav--desktop {
+.nav.nav--desktop {
   display: none;
 }
 
@@ -300,7 +300,7 @@ p:last-child {
     display: none;
   }
 
-  .nav--desktop {
+  .nav.nav--desktop {
     display: flex;
   }
 }
@@ -454,6 +454,12 @@ p:last-child {
   display: grid;
   gap: 1.25rem;
   padding-block: 1.25rem 3rem;
+  /* Allow wide children (e.g. Programm table) to scroll inside, not expand the page */
+  min-width: 0;
+}
+
+.intern-shell > * {
+  min-width: 0;
 }
 
 @media (min-width: 860px) {

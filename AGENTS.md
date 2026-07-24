@@ -14,6 +14,10 @@ Use Swiss German orthography for all user-facing text: **never write ß — alwa
 
 Examples: Spass, Fuss, Strasse, dass, gross, heiss, schliessen, fliessen.
 
+## Mobile first
+
+Design and build **mobile first**. Base styles target small screens; enhance with `min-width` media queries for larger viewports. Prioritize touch targets, readable type, and layouts that work on a phone in camp/travel conditions.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
