@@ -1,6 +1,5 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import CampAuth from '../components/CampAuth.astro';
 import { href, stripBase } from '../lib/paths';
 
 interface Props {
@@ -23,8 +22,7 @@ const links = [
 ];
 ---
 
-<BaseLayout title={title} description={description} mode="intern">
-  <CampAuth gate />
+<BaseLayout title={title} description={description} mode="intern" gate>
   <div class="wrap intern-shell">
     <aside class="intern-nav" aria-label="Camp-Navigation">
       <div class="intern-nav__label">Camp-Handbuch</div>

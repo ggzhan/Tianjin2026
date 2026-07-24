@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import CampAuth from '../components/CampAuth.astro';
+import { AUTH_KEY, AUTH_VALUE } from '../lib/camp-auth';
 import { href, stripBase } from '../lib/paths';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
   description?: string;
   mode?: 'public' | 'intern';
   showLogout?: boolean;
+  gate?: boolean;
 }
 
 const {
@@ -15,14 +17,16 @@ const {
   description = 'OTTV Trainingslager Tianjin 2026 — Tagebuch und Camp-Infos.',
   mode = 'public',
   showLogout = mode === 'intern',
+  gate = false,
 } = Astro.props;
 
 const pageTitle = title === 'OTTV Tianjin 2026' ? title : `${title} · OTTV Tianjin 2026`;
 const path = stripBase(Astro.url.pathname);
+const loginUrl = href('/intern/login');
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang="de" class:list={[gate && 'camp-gate']}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -37,6 +41,29 @@ const path = stripBase(Astro.url.pathname);
       rel="stylesheet"
     />
     <title>{pageTitle}</title>
+    {
+      gate && (
+        <>
+          <style is:inline>
+            html.camp-gate:not(.camp-ready) body {
+              visibility: hidden;
+            }
+          </style>
+          <script is:inline define:vars={{ loginUrl, AUTH_KEY, AUTH_VALUE }}>
+            try {
+              if (localStorage.getItem(AUTH_KEY) === AUTH_VALUE) {
+                document.documentElement.classList.add('camp-ready');
+              } else {
+                const next = encodeURIComponent(location.pathname + location.search);
+                location.replace(loginUrl + '?next=' + next);
+              }
+            } catch (e) {
+              location.replace(loginUrl);
+            }
+          </script>
+        </>
+      )
+    }
   </head>
   <body data-mode={mode}>
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
