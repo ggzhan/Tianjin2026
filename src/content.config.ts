@@ -12,6 +12,7 @@ const blog = defineCollection({
     coverAlt: z.string().optional(),
     gallery: z.boolean().default(false),
     draft: z.boolean().default(false),
+    placeholder: z.boolean().default(false),
   }),
 });
 

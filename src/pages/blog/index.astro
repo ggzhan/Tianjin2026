@@ -19,9 +19,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 
       <ol class="diary-feed">
         {
-          posts.map((post) => (
-            <li class="diary-entry">
-              <a class="diary-entry__link" href={href(`/blog/${post.id}`)}>
+          posts.map((post) => {
+            const inner = (
+              <>
                 <time class="diary-entry__date" datetime={post.data.pubDate.toISOString()}>
                   {post.data.pubDate.toLocaleDateString('de-CH', {
                     weekday: 'short',
@@ -47,9 +47,21 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
                   <p>{post.data.description}</p>
                   <span class="diary-entry__by">{post.data.author}</span>
                 </div>
-              </a>
-            </li>
-          ))
+              </>
+            );
+
+            return (
+              <li class:list={['diary-entry', post.data.placeholder && 'diary-entry--placeholder']}>
+                {post.data.placeholder ? (
+                  <div class="diary-entry__link diary-entry__link--static">{inner}</div>
+                ) : (
+                  <a class="diary-entry__link" href={href(`/blog/${post.id}`)}>
+                    {inner}
+                  </a>
+                )}
+              </li>
+            );
+          })
         }
       </ol>
     </div>
@@ -79,6 +91,18 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 
   .diary-entry__link:hover {
     transform: translateY(-3px);
+  }
+
+  .diary-entry__link--static:hover {
+    transform: none;
+  }
+
+  .diary-entry--placeholder {
+    opacity: 0.72;
+  }
+
+  .diary-entry--placeholder .diary-entry__body h2 {
+    font-style: italic;
   }
 
   .diary-entry__date {

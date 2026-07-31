@@ -4,7 +4,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import { href } from '../../lib/paths';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = await getCollection('blog', ({ data }) => !data.draft && !data.placeholder);
   return posts.map((post) => ({
     params: { slug: post.id },
   }));
@@ -16,7 +16,7 @@ if (!slug) {
 }
 
 const post = await getEntry('blog', slug);
-if (!post || post.data.draft) {
+if (!post || post.data.draft || post.data.placeholder) {
   return Astro.redirect(href('/404'));
 }
 
