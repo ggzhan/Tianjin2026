@@ -143,6 +143,12 @@ const isGallery = post.data.gallery;
     aspect-ratio: 16 / 10;
   }
 
+  .diary-post :global(.gallery figure.fit img) {
+    aspect-ratio: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
   .diary-post :global(.gallery-caption) {
     margin: -0.75rem 0 1.5rem;
     color: var(--muted);
