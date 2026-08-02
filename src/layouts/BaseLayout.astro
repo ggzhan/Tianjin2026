@@ -42,6 +42,21 @@ const loginUrl = href('/intern/login');
     />
     <title>{pageTitle}</title>
     {
+      import.meta.env.PROD && (
+        <>
+          <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-MZH4LT7BNR"></script>
+          <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-MZH4LT7BNR');
+          </script>
+        </>
+      )
+    }
+    {
       gate && (
         <>
           <style is:inline>
@@ -135,6 +150,96 @@ const loginUrl = href('/intern/login');
       </div>
     </footer>
     <CampAuth />
+    {
+      import.meta.env.PROD && (
+        <script is:inline>
+          (function () {
+            if (typeof gtag !== 'function') return;
+
+            function mediaLabel(url) {
+              if (!url) return '';
+              try {
+                var path = new URL(url, location.href).pathname;
+                var parts = path.split('/').filter(Boolean);
+                var upload = parts.indexOf('upload');
+                if (upload >= 0) {
+                  var after = parts.slice(upload + 1).filter(function (p) {
+                    return !/^(v\d+|f_|q_|c_|w_|h_|g_)/.test(p);
+                  });
+                  return after.join('/').replace(/\.[a-z0-9]+$/i, '');
+                }
+                return parts[parts.length - 1] || url;
+              } catch (e) {
+                return url;
+              }
+            }
+
+            function track(name, params) {
+              gtag('event', name, Object.assign({ page_path: location.pathname }, params));
+            }
+
+            var main = document.getElementById('main-content');
+            if (!main) return;
+
+            main.addEventListener('click', function (event) {
+              var target = event.target;
+              if (!(target instanceof Element)) return;
+              var img = target.closest('img');
+              if (!img || !main.contains(img)) return;
+              if (img.closest('a.brand, .site-header, .site-footer')) return;
+              track('image_click', {
+                media_id: mediaLabel(img.currentSrc || img.src),
+                image_alt: (img.getAttribute('alt') || '').slice(0, 100),
+              });
+            });
+
+            main.querySelectorAll('video').forEach(function (video) {
+              if (video.dataset.gaBound) return;
+              video.dataset.gaBound = '1';
+              var milestones = { 25: false, 50: false, 75: false };
+
+              video.addEventListener('play', function () {
+                track('video_play', {
+                  media_id: mediaLabel(video.currentSrc || video.src),
+                  video_current_time: Math.round(video.currentTime),
+                });
+              });
+
+              video.addEventListener('pause', function () {
+                if (video.ended) return;
+                track('video_pause', {
+                  media_id: mediaLabel(video.currentSrc || video.src),
+                  video_current_time: Math.round(video.currentTime),
+                  video_percent: video.duration
+                    ? Math.round((video.currentTime / video.duration) * 100)
+                    : 0,
+                });
+              });
+
+              video.addEventListener('ended', function () {
+                track('video_complete', {
+                  media_id: mediaLabel(video.currentSrc || video.src),
+                });
+              });
+
+              video.addEventListener('timeupdate', function () {
+                if (!video.duration) return;
+                var pct = (video.currentTime / video.duration) * 100;
+                [25, 50, 75].forEach(function (mark) {
+                  if (pct >= mark && !milestones[mark]) {
+                    milestones[mark] = true;
+                    track('video_progress', {
+                      media_id: mediaLabel(video.currentSrc || video.src),
+                      video_percent: mark,
+                    });
+                  }
+                });
+              });
+            });
+          })();
+        </script>
+      )
+    }
     <script>
       const drawer = document.querySelector('.nav-drawer');
       const toggle = document.querySelector('.nav-drawer__toggle');
