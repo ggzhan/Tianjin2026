@@ -7,6 +7,6 @@ cover: "https://images.unsplash.com/photo-1676827613262-5fba25cee5fd?auto=format
 coverAlt: "Tischtennisschläger und Ball auf blauem Tisch"
 ---
 
-Willkommen im öffentlichen Lager-Tagebuch. Alle Camp-Teilnehmer:innen können hier mitmachen: kurze Texte, Fotos aus der Halle und von Ausflügen — und später auch Videos.
+Willkommen im öffentlichen Lager-Tagebuch. Hier findet ihr unsere Erlebnisse im 16-tägigen Chinalager. Geschrieben von allen Camp-Teilnehmern!
 
 Wir updaten etwa alle ein bis zwei Tage. Der detaillierte Tagesplan und die praktischen Infos bleiben im passwortgeschützten [Camp-Bereich](../intern/).
