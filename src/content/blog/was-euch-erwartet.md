@@ -3,7 +3,7 @@ title: "Was uns in Tianjin erwartet"
 description: "Stadt, Halle, Ma Wenge — der Rahmen für zwei intensive Wochen."
 pubDate: 2026-07-10
 author: "Lager-Team"
-cover: "https://pub-b734554a82b94110b9cbcf66b2882939.r2.dev/tianjin2026/site/tianjin-river.jpg"
+cover: "https://pub-b734554a82b94110b9cbcf66b2882939.r2.dev/tianjin2026/covers/was-euch-erwartet.jpg"
 coverAlt: "Tianjin am Fluss mit Skyline und Brücken"
 ---
 
